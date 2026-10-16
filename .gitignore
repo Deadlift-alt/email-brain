@@ -1,0 +1,21 @@
+# NEVER commit personal mail or databases
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+*.mbox
+*.eml
+*.pst
+*.ost
+.emailbrain/
+Takeout/
+Maildir/
+
+# python / editor
+__pycache__/
+*.pyc
+.venv/
+.idea/
+.vscode/
+.DS_Store
+*.skill
