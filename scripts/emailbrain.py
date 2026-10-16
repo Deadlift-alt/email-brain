@@ -387,7 +387,17 @@ def cmd_serve(a):
     HTTPServer((a.host, a.port), H).serve_forever()
 
 # ---------------------------------------------------------------- cli
+def fix_output_encoding():
+    """Windows pipes/consoles often use cp1252, which can't print arrows or accents.
+    Use UTF-8 when output is piped, and never crash on an unprintable character."""
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            if stream.isatty(): stream.reconfigure(errors="replace")
+            else: stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError): pass
+
 def main():
+    fix_output_encoding()
     p = argparse.ArgumentParser(prog="emailbrain", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--db", help=f"database path (default {DEFAULT_DB})")
     s = p.add_subparsers(dest="cmd", required=True)

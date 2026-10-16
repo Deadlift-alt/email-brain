@@ -4,7 +4,8 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parent.parent / "scripts" / "emailbrain.py"
 
 def run(db, *args, check=True):
-    r = subprocess.run([sys.executable, str(SCRIPT), "--db", db, *args], capture_output=True, text=True)
+    r = subprocess.run([sys.executable, str(SCRIPT), "--db", db, *args], capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
     if check: assert r.returncode == 0, r.stderr
     return r
 
